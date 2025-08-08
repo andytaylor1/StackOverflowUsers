@@ -56,10 +56,10 @@ struct UserViewModel: Hashable {
     /// - imageURL: Image url of the user.
     /// - following: Indicates if the user is being followed.
     init(name: String, reputation: Int, imageURL: String, following: Bool) {
-        self.name = "Name: \(name)"
-        self.reputation = "Reputation: \(reputation)"
+        self.name = name
+        self.reputation = "\(reputation)"
         self.imageURL = imageURL
-        self.following = "following: \(following ? "Yes" : "No")"
+        self.following = "\(following ? "Yes" : "No")"
     }
     
 }
