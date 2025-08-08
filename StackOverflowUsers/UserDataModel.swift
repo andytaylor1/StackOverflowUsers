@@ -13,6 +13,15 @@ protocol UserDataModel {
     
 }
 
+struct StoredDataModel: UserDataModel, Hashable {
+
+    var id: UUID
+    var name: String
+    var reputation: Int
+    var profileImageURL: String
+    
+}
+
 struct UserDataModelResponse: UserDataModel, Decodable {
 
     var name: String
@@ -34,23 +43,25 @@ struct UserResponse: Decodable {
 }
 
 /// View model for a user.
-class UserViewModel {
-
+struct UserViewModel: Hashable {    
+    
     /// Name of the user.
     var name: String
     /// Reputation of the user.
-    var repuation: Int
+    var reputation: String
+    
+    var imageURL: String
     /// Profile Image of the user.
-    var profileImage: UIImage
+    var profileImage: UIImage?
      /// Indicates if the user is being followed.
-    var following: Bool
+    var following: String
     
     /// Initialiser for user view model.
-    init(name: String, repuation: Int, profileImage: UIImage, following: Bool) {
-        self.name = name
-        self.repuation = repuation
-        self.profileImage = profileImage
-        self.following = following
+    init(name: String, reputation: Int, imageURL: String, following: Bool) {
+        self.name = "Name: \(name)"
+        self.reputation = "Reputation: \(reputation)"
+        self.imageURL = imageURL
+        self.following = "following: \(following ? "Yes" : "No")"
     }
     
 }
@@ -59,17 +70,14 @@ extension UserViewModel {
 
     /// Generates a user view model from the given user data model.
     static func fromDataModel(_ user: UserDataModel) -> UserViewModel {
-        return UserViewModel(
+    let viewModel = UserViewModel(
             name: user.name,
-            repuation: user.reputation,
-            profileImage: getImageFromURL(string: user.profileImageURL),
-            following: false
-            )
+            reputation: user.reputation,
+            imageURL: user.profileImageURL,
+            following: false,
+        )
+        return viewModel
     }
     
-    private static func getImageFromURL(string: String) -> UIImage {
-        
-        return UIImage()
-        
-    }
+    
 }
