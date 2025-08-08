@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-/// Data model for a user.
+/// Data model pattern for a user.
 protocol UserDataModel {
 
     /// Name of the user.
@@ -13,15 +13,7 @@ protocol UserDataModel {
     
 }
 
-struct StoredDataModel: UserDataModel, Hashable {
-
-    var id: UUID
-    var name: String
-    var reputation: Int
-    var profileImageURL: String
-    
-}
-
+/// The expected data model repsonse from the api.
 struct UserDataModelResponse: UserDataModel, Decodable {
 
     var name: String
@@ -38,6 +30,7 @@ struct UserDataModelResponse: UserDataModel, Decodable {
 
 }
 
+/// The expected initial repsonse for the api containing the users to display.
 struct UserResponse: Decodable {
     var items: [UserDataModelResponse]
 }
@@ -49,7 +42,7 @@ struct UserViewModel: Hashable {
     var name: String
     /// Reputation of the user.
     var reputation: String
-    
+    /// Image url for the user.
     var imageURL: String
     /// Profile Image of the user.
     var profileImage: UIImage?
@@ -57,6 +50,11 @@ struct UserViewModel: Hashable {
     var following: String
     
     /// Initialiser for user view model.
+    /// - parameters:
+    /// - name: Name of the user.
+    /// - reputation: Reputation of the user.
+    /// - imageURL: Image url of the user.
+    /// - following: Indicates if the user is being followed.
     init(name: String, reputation: Int, imageURL: String, following: Bool) {
         self.name = "Name: \(name)"
         self.reputation = "Reputation: \(reputation)"

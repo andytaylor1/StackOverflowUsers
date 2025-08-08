@@ -3,20 +3,24 @@
 //
 import UIKit
 
+/// View Controller for displaying the list of user profiles.
 class ProfileListViewController: UICollectionViewController {
     
+    /// Sections that can be displayed in the view.
     enum Section {
     case main
     case loading
     case error
     }
     
+    /// Iterms that can be displayed in a section.
     enum Item: Hashable {
     case loading(UUID)
     case card(UserViewModel)
     case error(UUID)
     }
     
+    /// The current state the view is displaying.
     var viewState: ViewState? {
         didSet {
             switch viewState {
@@ -48,8 +52,10 @@ class ProfileListViewController: UICollectionViewController {
         }
     }
     
+    /// The associated coordinator for this view.
     var coordinator: ProfileCoordinator?
     
+    /// the diffable data source used for hanling content in the collection view.
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
     override func viewDidLoad() {
@@ -109,6 +115,7 @@ class ProfileListViewController: UICollectionViewController {
 
 }
 
+/// The cell containing profile information to display for each item.
 class ProfileListCell: UICollectionViewListCell {
 
     @IBOutlet weak var profileLabel: UILabel!
