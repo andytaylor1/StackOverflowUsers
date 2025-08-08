@@ -14,8 +14,8 @@ struct TestUserModel: UserDataModel {
 }
 
 final class StackOverflowUsersTest: XCTestCase {
-
-
+    
+    
     func testImageLoads() throws {
         let expectation = XCTestExpectation(description: "Load image.")
         
@@ -27,5 +27,5 @@ final class StackOverflowUsersTest: XCTestCase {
         }
         wait(for: [expectation])
     }
-
+    
 }

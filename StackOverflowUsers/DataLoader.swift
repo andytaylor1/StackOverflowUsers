@@ -3,9 +3,9 @@
 //
 import UIKit
 
-/// Loads the data needed from the api
+/// Loads the data needed from the api.
 class DataLoader {
-
+    
     /// The url used to obtain data needed.
     let url  = URL(string: "https://api.stackexchange.com/2.2/users?page=1&pagesize=20&order=desc&sort=reputation&site=stackoverflow")
     
@@ -57,13 +57,13 @@ class DataLoader {
     func getImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else {
-            completion(nil)
+                completion(nil)
                 return
             }
             if let image = UIImage(data: data) {
                 completion(image)
             } else {
-            completion(nil)
+                completion(nil)
             }
         }.resume()
     }

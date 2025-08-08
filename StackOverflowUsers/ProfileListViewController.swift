@@ -8,16 +8,16 @@ class ProfileListViewController: UICollectionViewController {
     
     /// Sections that can be displayed in the view.
     enum Section {
-    case main
-    case loading
-    case error
+        case main
+        case loading
+        case error
     }
     
-    /// Iterms that can be displayed in a section.
+    /// Items that can be displayed in a section.
     enum Item: Hashable {
-    case loading(UUID)
-    case card(UserViewModel)
-    case error(UUID)
+        case loading(UUID)
+        case card(UserViewModel)
+        case error(UUID)
     }
     
     /// The current state the view is displaying.
@@ -25,8 +25,8 @@ class ProfileListViewController: UICollectionViewController {
         didSet {
             switch viewState {
             case .loading:
-                 var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-                 snapshot.deleteAllItems()
+                var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+                snapshot.deleteAllItems()
                 snapshot.appendSections([.loading])
                 snapshot.appendItems([.loading(UUID())])
                 dataSource?.apply(snapshot, animatingDifferences: true)
@@ -38,14 +38,14 @@ class ProfileListViewController: UICollectionViewController {
                 let cards = users.map { Item.card($0) }
                 snapshot.appendItems(cards)
                 dataSource?.apply(snapshot, animatingDifferences: true)
-
+                
             case .error(_):
-            var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-                 snapshot.deleteAllItems()
+                var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+                snapshot.deleteAllItems()
                 snapshot.appendSections([.error])
                 snapshot.appendItems([.error(UUID())])
                 dataSource?.apply(snapshot, animatingDifferences: true)
-                break
+                
             case nil:
                 break
             }
@@ -55,7 +55,7 @@ class ProfileListViewController: UICollectionViewController {
     /// The associated coordinator for this view.
     var coordinator: ProfileCoordinator?
     
-    /// the diffable data source used for hanling content in the collection view.
+    /// the diffable data source used for handling content in the collection view.
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
     override func viewDidLoad() {
@@ -63,40 +63,57 @@ class ProfileListViewController: UICollectionViewController {
         
         collectionView.collectionViewLayout = makeCardLayout()
         
+        initDataSource()
+    }
+    
+    private func initDataSource() {
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             switch model {
             case .card(let model):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Profile", for: indexPath) as! ProfileListCell
-                cell.profileLabel.text = model.name
-                cell.reputationLabel.text = "\(model.reputation)"
+                cell.profileLabel.text = "Name: \(model.name)"
+                cell.reputationLabel.text = "Reputation: \(model.reputation)"
+                cell.followingLabel.text = "Following: \(model.following)"
                 cell.imageView.image = model.profileImage
                 cell.layer.cornerRadius = 12
                 cell.layer.masksToBounds = true
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowRadius = 4
+                // Add tap gesture to toggle following
+                cell.followingLabel.isUserInteractionEnabled = true
+                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleFollowingTap(_:)))
+                cell.followingLabel.addGestureRecognizer(tap)
+                cell.followingLabel.tag = indexPath.row
                 return cell
             case .loading(_):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Loading", for: indexPath) as! UICollectionViewListCell
                 cell.layer.cornerRadius = 12
                 cell.layer.masksToBounds = true
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowRadius = 4
                 return cell
             case .error(_):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Error", for: indexPath) as! UICollectionViewListCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Error", for: indexPath) as! UICollectionViewListCell
                 cell.layer.cornerRadius = 12
                 cell.layer.masksToBounds = true
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowRadius = 4
                 return cell
             }
         })
-        
-            
+    }
+
+    // Handle tap on following label to toggle following state
+    @objc private func handleFollowingTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel,
+              let snapshot = dataSource?.snapshot(),
+              let item = snapshot.itemIdentifiers(inSection: .main)[safe: label.tag],
+              case let .card(model) = item else { return }
+        model.toggleFollowing()
+        // Refresh the view state to update the label
+        if let users = snapshot.itemIdentifiers(inSection: .main).compactMap({
+            if case let .card(vm) = $0 { return vm } else { return nil }
+        }) {
+            self.viewState = .loaded(users)
+        }
     }
     
     private func makeCardLayout() -> UICollectionViewLayout {
-    
+        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(90))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -112,16 +129,16 @@ class ProfileListViewController: UICollectionViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-
+    
 }
 
 /// The cell containing profile information to display for each item.
 class ProfileListCell: UICollectionViewListCell {
-
+    
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var reputationLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-
+    
 }

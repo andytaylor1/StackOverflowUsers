@@ -25,15 +25,21 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
     
     /// The navigation controller handling the user view.
     var navigationController: UINavigationController
-    
-    private weak var viewController: ProfileListViewController?
-    
-    /// Initialiser for profile coordinator
-    /// - Parameter navigationController: The navigation controller for the coordinator to use.
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
 
+    private weak var viewController: ProfileListViewController?
+
+    /// Service for following state, owned by the coordinator
+    private let userFollowingService: UserFollowingService
+
+    /// Initialiser for profile coordinator
+    /// - Parameters:
+    ///   - navigationController: The navigation controller for the coordinator to use.
+    ///   - userFollowingService: The service for following state (default: new instance)
+    init(navigationController: UINavigationController, userFollowingService: UserFollowingService = UserFollowingService()) {
+        self.navigationController = navigationController
+        self.userFollowingService = userFollowingService
+    }
+    
     func start() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "CollectionView") as? ProfileListViewController else { fatalError("Missing Storyboard Setup") }
@@ -49,21 +55,21 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
     }
     
     private func fetchUsers() {
-    let dg = DispatchGroup()
-     let dataLoader = DataLoader()
+        let dg = DispatchGroup()
+        let dataLoader = DataLoader()
         dataLoader.fetchUser { [weak self] result in
-        guard let self else { return }
+            guard let self else { return }
             switch result {
             case .success(let success):
-                let viewModels = success.map { UserViewModel.fromDataModel($0) }
-                
+                let viewModels = success.map { UserViewModel.fromDataModel($0, userFollowingService: self.userFollowingService) }
+
                 var viewModelsWithImage: [UserViewModel] = []
                 viewModels.forEach { model in
                     dg.enter()
                     dataLoader.getImage(from: URL(string: model.imageURL)!) { image in
-                    var viewModel = model
+                        var viewModel = model
                         if let image = image {
-                        viewModel.profileImage = image
+                            viewModel.profileImage = image
                             viewModelsWithImage.append(viewModel)
                         }
                         dg.leave()
@@ -78,5 +84,5 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
         }
     }
     
-
+    
 }
