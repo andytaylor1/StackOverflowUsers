@@ -1,6 +1,6 @@
 //
-// 
-// 
+//
+//
 
 import UIKit
 
@@ -25,12 +25,12 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
     
     /// The navigation controller handling the user view.
     var navigationController: UINavigationController
-
+    
     private weak var viewController: ProfileListViewController?
-
+    
     /// Service for following state, owned by the coordinator
     private let userFollowingService: UserFollowingService
-
+    
     /// Initialiser for profile coordinator
     /// - Parameters:
     ///   - navigationController: The navigation controller for the coordinator to use.
@@ -61,8 +61,9 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
             guard let self else { return }
             switch result {
             case .success(let success):
-                let viewModels = success.map { UserViewModel.fromDataModel($0, userFollowingService: self.userFollowingService) }
-
+                let viewModels = success.map {
+                    UserViewModel.fromDataModel($0, userFollowingService: self.userFollowingService)
+                }
                 var viewModelsWithImage: [UserViewModel] = []
                 viewModels.forEach { model in
                     dg.enter()
@@ -76,7 +77,8 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
                     }
                 }
                 dg.notify(queue: .main) {
-                    self.viewController?.viewState = .loaded(viewModelsWithImage)
+                    let sortedModels = viewModelsWithImage.sorted { Int($1.reputation) ?? 0 < Int($0.reputation) ?? 0 }
+                    self.viewController?.viewState = .loaded(sortedModels)
                 }
             case .failure(let failure):
                 self.viewController?.viewState = .error(failure)

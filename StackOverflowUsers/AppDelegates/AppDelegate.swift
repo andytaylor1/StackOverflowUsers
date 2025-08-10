@@ -32,5 +32,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
 }
-
-//"https://api.stackexchange.com/2.2/users?page=1&pagesize=20&order=desc&sort=reputation&site=stackoverflow"

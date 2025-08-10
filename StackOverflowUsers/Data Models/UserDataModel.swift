@@ -36,7 +36,7 @@ struct UserResponse: Decodable {
 }
 
 /// View model for a user.
-struct UserViewModel: Hashable {    
+struct UserViewModel: Hashable {
     
     /// Name of the user.
     var name: String
@@ -74,6 +74,19 @@ struct UserViewModel: Hashable {
     /// Toggle following state and persist it
     func toggleFollowing() {
         _ = userFollowingService.toggleFollowing(for: name)
+    }
+    
+    static func == (lhs: UserViewModel, rhs: UserViewModel) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.reputation == rhs.reputation &&
+        lhs.imageURL == rhs.imageURL
+        
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(reputation)
+        hasher.combine(imageURL)
     }
     
 }

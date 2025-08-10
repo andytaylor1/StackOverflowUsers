@@ -1,5 +1,5 @@
 //
-// 
+//
 //
 import UIKit
 
@@ -60,10 +60,30 @@ class ProfileListViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.collectionViewLayout = makeCardLayout()
-        
+        collectionView.delegate = self
+        collectionView.allowsSelection = true
         initDataSource()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let snapshot = dataSource?.snapshot() else { return }
+        
+        let items = snapshot.itemIdentifiers(inSection: .main)
+        guard indexPath.item < items.count else { return }
+        
+        let item = items[indexPath.item]
+        if case .card(let model) = item {
+            
+            model.toggleFollowing()
+            
+            var newSnapshot = snapshot
+            newSnapshot.reconfigureItems([.card(model)])
+            
+            dataSource?.apply(newSnapshot,  animatingDifferences: true)
+        }
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
     private func initDataSource() {
@@ -71,38 +91,14 @@ class ProfileListViewController: UICollectionViewController {
             switch model {
             case .card(let model):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Profile", for: indexPath) as! ProfileListCell
-                // Configure cell appearance
-                cell.backgroundColor = .systemBackground
+                cell.profileLabel.text = "Name: \(model.name)"
+                cell.reputationLabel.text = "Reputation: \(model.reputation)"
+                cell.followingLabel.text = "Following: \(model.following)"
+                cell.imageView.image = model.profileImage
                 cell.layer.cornerRadius = 12
                 cell.layer.masksToBounds = true
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-                cell.layer.shadowOpacity = 0.1
-                cell.layer.shadowRadius = 4
-                
-                // Configure content
-                cell.profileLabel.text = model.name
-                cell.reputationLabel.text = "Reputation: \(model.reputation)"
-                cell.followingLabel.text = model.following
-                cell.imageView.image = model.profileImage
-                
-                // Style the following label based on state
-                if model.isFollowing {
-                    cell.followingLabel.textColor = .systemGreen
-                    cell.followingLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-                } else {
-                    cell.followingLabel.textColor = .systemBlue
-                    cell.followingLabel.font = .systemFont(ofSize: 15, weight: .regular)
-                }
-                
-                // Add subtle hover effect
-                let hover = UIHoverEffect()
-                cell.hoverEffect = hover
                 // Add tap gesture to toggle following
                 cell.followingLabel.isUserInteractionEnabled = true
-                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleFollowingTap(_:)))
-                cell.followingLabel.addGestureRecognizer(tap)
-                cell.followingLabel.tag = indexPath.row
                 return cell
             case .loading(_):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Loading", for: indexPath) as! UICollectionViewListCell
@@ -117,21 +113,9 @@ class ProfileListViewController: UICollectionViewController {
             }
         })
     }
-
+    
     // Handle tap on following label to toggle following state
-    @objc private func handleFollowingTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel,
-              let snapshot = dataSource?.snapshot(),
-              let item = snapshot.itemIdentifiers(inSection: .main)[safe: label.tag],
-              case let .card(model) = item else { return }
-        model.toggleFollowing()
-        // Refresh the view state to update the label
-        if let users = snapshot.itemIdentifiers(inSection: .main).compactMap({
-            if case let .card(vm) = $0 { return vm } else { return nil }
-        }) {
-            self.viewState = .loaded(users)
-        }
-    }
+   
     
     private func makeCardLayout() -> UICollectionViewLayout {
         
@@ -158,26 +142,8 @@ class ProfileListCell: UICollectionViewListCell {
     
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var reputationLabel: UILabel!
+    @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-    let followingIndicator: FollowingIndicatorView = {
-        let view = FollowingIndicatorView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupFollowingIndicator()
-    }
-    
-    private func setupFollowingIndicator() {
-        contentView.addSubview(followingIndicator)
-        NSLayoutConstraint.activate([
-            followingIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            followingIndicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            followingIndicator.widthAnchor.constraint(equalToConstant: 30),
-            followingIndicator.heightAnchor.constraint(equalToConstant: 30)
-        ])
-    }
 }
