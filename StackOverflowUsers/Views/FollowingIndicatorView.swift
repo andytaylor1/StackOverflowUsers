@@ -1,6 +1,8 @@
 import UIKit
 
+/// A visual display that indicates if a user is being followed.
 class FollowingIndicatorView: UIView {
+
     private let iconLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -9,6 +11,7 @@ class FollowingIndicatorView: UIView {
         return label
     }()
     
+    /// The following state for the view.
     var isFollowing: Bool = false {
         didSet {
             updateState(animated: true)
@@ -26,7 +29,7 @@ class FollowingIndicatorView: UIView {
     }
     
     private func setupView() {
-        layer.cornerRadius = 15 // Will create a circle when height = width = 30
+        layer.cornerRadius = 15
         clipsToBounds = true
         
         addSubview(iconLabel)

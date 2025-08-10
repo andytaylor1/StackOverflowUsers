@@ -40,6 +40,7 @@ class ProfileCoordinator: NSObject, CoordinatorProtocol {
         self.userFollowingService = userFollowingService
     }
     
+    /// Start the coordinator
     func start() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "CollectionView") as? ProfileListViewController else { fatalError("Missing Storyboard Setup") }

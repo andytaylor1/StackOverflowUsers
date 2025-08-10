@@ -16,55 +16,46 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LqG-77-yxl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.10911626119999999" green="0.13599915979999999" blue="0.29513167699999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="0.0" id="Lnr-aR-ptj">
-                            <size key="itemSize" width="375" height="128"/>
-                            <size key="estimatedItemSize" width="400" height="128"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="16" minimumInteritemSpacing="0.0" id="Lnr-aR-ptj">
+                            <size key="itemSize" width="375" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="16"/>
+                            <inset key="sectionInset" minX="12" minY="12" maxX="12" maxY="12"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Profile" id="1cb-1F-KDX" customClass="ProfileListCell" customModule="StackOverflowUsers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                <rect key="frame" x="22" y="12" width="331" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="X5u-xr-Ck6">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="card-container" insetsLayoutMarginsFromSafeArea="NO" id="X5u-xr-Ck6">
+                                    <rect key="frame" x="0.0" y="0.0" width="331" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pk9-Ct-B1m">
-                                            <rect key="frame" x="23" y="0.0" width="329" height="90"/>
+                                            <rect key="frame" x="12" y="0.0" width="307" height="90"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9QE-Dc-EGa">
-                                                    <rect key="frame" x="8" y="8" width="239" height="74"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9QE-Dc-EGa">
+                                                    <rect key="frame" x="8" y="8" width="217" height="74"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lM7-tP-AZw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="239" height="24.666666666666668"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="iLo-26-2Ho"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="0.0" y="0.0" width="217" height="33"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reputation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04q-XB-xGC">
-                                                            <rect key="frame" x="0.0" y="24.666666666666664" width="239" height="24.666666666666664"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Reputation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04q-XB-xGC">
+                                                            <rect key="frame" x="0.0" y="41" width="217" height="33"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-CC-xot">
-                                                            <rect key="frame" x="0.0" y="49.333333333333336" width="239" height="24.666666666666664"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                            <color key="textColor" systemColor="systemBlueColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8t2-R2-Ddj">
-                                                    <rect key="frame" x="247" y="8.6666666666666643" width="74" height="72.666666666666686"/>
+                                                    <rect key="frame" x="225" y="8.6666666666666643" width="74" height="72.666666666666686"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="8t2-R2-Ddj" secondAttribute="height" multiplier="1:1" id="uoq-Vg-OuM"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="74" id="xif-VC-RAk"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -78,35 +69,34 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="pk9-Ct-B1m" secondAttribute="bottom" id="7Np-Mp-nrT"/>
-                                        <constraint firstItem="pk9-Ct-B1m" firstAttribute="leading" secondItem="X5u-xr-Ck6" secondAttribute="leading" constant="23" id="aZx-z8-2PH"/>
-                                        <constraint firstAttribute="trailing" secondItem="pk9-Ct-B1m" secondAttribute="trailing" constant="23" id="fAE-2N-6A2"/>
-                                        <constraint firstItem="pk9-Ct-B1m" firstAttribute="top" secondItem="X5u-xr-Ck6" secondAttribute="top" id="m2A-Uo-AlI"/>
+                                        <constraint firstAttribute="bottom" secondItem="pk9-Ct-B1m" secondAttribute="bottom" id="4lc-Qx-p8Q"/>
+                                        <constraint firstItem="pk9-Ct-B1m" firstAttribute="top" secondItem="X5u-xr-Ck6" secondAttribute="top" id="EkF-1d-erN"/>
+                                        <constraint firstAttribute="trailing" secondItem="pk9-Ct-B1m" secondAttribute="trailing" constant="12" id="Lhc-Sa-Oh7"/>
+                                        <constraint firstItem="pk9-Ct-B1m" firstAttribute="leading" secondItem="X5u-xr-Ck6" secondAttribute="leading" constant="12" id="R1v-OT-VNK"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="375" height="90"/>
+                                <size key="customSize" width="331" height="90"/>
                                 <connections>
-                                    <outlet property="followingLabel" destination="GNb-CC-xot" id="cUB-Iz-3X2"/>
                                     <outlet property="imageView" destination="8t2-R2-Ddj" id="XEf-gl-FLg"/>
                                     <outlet property="profileLabel" destination="lM7-tP-AZw" id="Fqd-y1-x0g"/>
                                     <outlet property="reputationLabel" destination="04q-XB-xGC" id="vFJ-p5-lOp"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="Loading" id="4Xx-5O-PBN" customClass="UICollectionViewListCell">
-                                <rect key="frame" x="0.0" y="100" width="375" height="128"/>
+                                <rect key="frame" x="22" y="118" width="331" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8WU-Sh-Htw">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="331" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="loading-stack">
-                                            <rect key="frame" x="23" y="44" width="329" height="40.5"/>
+                                            <rect key="frame" x="23" y="22" width="285" height="46"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="loading-indicator">
-                                                    <rect key="frame" x="154.5" y="0.0" width="20" height="20"/>
+                                                    <rect key="frame" x="132.66666666666666" y="0.0" width="20" height="20"/>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Stack Overflow Users..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccu-tb-5dZ">
-                                                    <rect key="frame" x="23" y="28" width="283" height="12.5"/>
+                                                    <rect key="frame" x="33.000000000000014" y="28" width="219.33333333333337" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -120,28 +110,28 @@
                                         <constraint firstAttribute="trailing" secondItem="loading-stack" secondAttribute="trailing" constant="23" id="loading-trailing"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="375" height="128"/>
+                                <size key="customSize" width="331" height="90"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="Error" id="cUB-g1-sP6" customClass="UICollectionViewListCell">
-                                <rect key="frame" x="0.0" y="238" width="375" height="128"/>
+                                <rect key="frame" x="22" y="224" width="331" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0TC-zH-RXW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="331" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="error-stack">
-                                            <rect key="frame" x="23" y="35" width="329" height="58.5"/>
+                                            <rect key="frame" x="23" y="14" width="285" height="62"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="exclamationmark.triangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="error-image">
-                                                    <rect key="frame" x="146.5" y="0.0" width="36" height="32"/>
+                                                    <rect key="frame" x="124.66666666666666" y="1.3333333333333321" width="36" height="33.666666666666671"/>
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="error-image-width"/>
                                                         <constraint firstAttribute="height" constant="36" id="error-image-height"/>
+                                                        <constraint firstAttribute="width" constant="36" id="error-image-width"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to load users. Tap to retry." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLz-oA-Hrb">
-                                                    <rect key="frame" x="23" y="40" width="283" height="18.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to load users." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLz-oA-Hrb">
+                                                    <rect key="frame" x="72.333333333333329" y="44" width="140.33333333333337" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
@@ -155,7 +145,7 @@
                                         <constraint firstAttribute="trailing" secondItem="error-stack" secondAttribute="trailing" constant="23" id="error-trailing"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="375" height="128"/>
+                                <size key="customSize" width="331" height="90"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -171,9 +161,16 @@
         </scene>
     </scenes>
     <resources>
+        <image name="exclamationmark.triangle.fill" catalog="system" width="128" height="109"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
