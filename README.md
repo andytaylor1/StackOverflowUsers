@@ -1,6 +1,6 @@
 # StackOverflow Users App
 
-An iOS app that demonstrates some of my key skills. Although I typically work in an MVVM structure I've seen this as a good oppurtunity to study and adopt MVVM+C. I currently work with IGListKit so wanted to stick to a similar design principle of using collection views with sections and switching these sections based on the current state of the view. I've used mainly storyboards but also with some programatic alterations, mostly around cell display handling. I've also used a small full programatic display for the following indicator.
+An iOS app that demonstrates key skills. Although I typically work in an MVVM structure I've seen this as a good oppurtunity to study and adopt MVVM+C. I currently work with IGListKit so wanted to stick to a similar design principle of using collection views with sections and switching these sections based on the current state of the view. I've used mainly storyboards but also with some programatic alterations, mostly around cell display handling. I've also used a small full programatic display for the following indicator.
 
 ## Features
 
